@@ -1,6 +1,8 @@
 #This useless piece of code is written by Mriganka Shekhar Chakravarty. Please swear me at https://www.linkedin.com/in/mriganka82624/
 # Jai Hind <3
-import requests, datetime, json, time, smtplib, os, sys
+import requests, datetime, json, time, smtplib, os, sys, base64
+from cryptography.fernet import Fernet
+from getmac import get_mac_address as gma
 workdir = ""
 twofaauth= ""
 email =""
@@ -88,9 +90,16 @@ if len(sys.argv)>0:
         email = input("Please enter your email id\n")
         print("1) Please enable 2-Factor authentication at https://myaccount.google.com/security\n2) Then generate an application password at (https://myaccount.google.com/apppasswords)")
         twofaauth = input("Enter password...")
+        tfa = twofaauth
+        key = gma()
+        key = key*(32//len(key)) + key[:32%len(key)]
+        key = base64.urlsafe_b64encode(key.encode())
+        f = Fernet(key)
+        enc = f.encrypt(tfa.encode())
+        enc = enc.decode()
         f = open("user_details.txt","w")
         f.write(email+"\n")
-        f.write(twofaauth+"\n")
+        f.write(enc+"\n")
         f.write(str(age)+"\n")
         f.write(str(rng)+ "\n")
         f.write(str(target)+"\n")
@@ -103,6 +112,12 @@ if len(sys.argv)>0:
         readdata= f.readlines()
         email =  readdata[0][:-1]
         twofaauth = readdata[1][:-1]
+        twofaauth = twofaauth.encode()
+        key = gma()
+        key = key*(32//len(key)) + key[:32%len(key)]
+        key = base64.urlsafe_b64encode(key.encode())
+        f = Fernet(key)
+        twofaauth = f.decrypt(twofaauth).decode()
         age = int(readdata[2][:-1])
         rng = int(readdata[3][:-1])
         target = int(readdata[4][:-1])
