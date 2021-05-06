@@ -1,6 +1,6 @@
 #This useless piece of code is written by Mriganka Shekhar Chakravarty. Please swear me at https://www.linkedin.com/in/mriganka82624/
 # Jai Hind <3
-import requests, datetime, json, time, smtplib, os, sys, base64
+import requests, datetime, json, time, smtplib, os, sys, base64, re
 from cryptography.fernet import Fernet
 from getmac import get_mac_address as gma
 workdir = ""
@@ -12,7 +12,12 @@ state_id=""
 age = ""
 states = [{"state_id":1,"state_name":"Andaman and Nicobar Islands"},{"state_id":2,"state_name":"Andhra Pradesh"},{"state_id":3,"state_name":"Arunachal Pradesh"},{"state_id":4,"state_name":"Assam"},{"state_id":5,"state_name":"Bihar"},{"state_id":6,"state_name":"Chandigarh"},{"state_id":7,"state_name":"Chhattisgarh"},{"state_id":8,"state_name":"Dadra and Nagar Haveli"},{"state_id":37,"state_name":"Daman and Diu"},{"state_id":9,"state_name":"Delhi"},{"state_id":10,"state_name":"Goa"},{"state_id":11,"state_name":"Gujarat"},{"state_id":12,"state_name":"Haryana"},{"state_id":13,"state_name":"Himachal Pradesh"},{"state_id":14,"state_name":"Jammu and Kashmir"},{"state_id":15,"state_name":"Jharkhand"},{"state_id":16,"state_name":"Karnataka"},{"state_id":17,"state_name":"Kerala"},{"state_id":18,"state_name":"Ladakh"},{"state_id":19,"state_name":"Lakshadweep"},{"state_id":20,"state_name":"Madhya Pradesh"},{"state_id":21,"state_name":"Maharashtra"},{"state_id":22,"state_name":"Manipur"},{"state_id":23,"state_name":"Meghalaya"},{"state_id":24,"state_name":"Mizoram"},{"state_id":25,"state_name":"Nagaland"},{"state_id":26,"state_name":"Odisha"},{"state_id":27,"state_name":"Puducherry"},{"state_id":28,"state_name":"Punjab"},{"state_id":29,"state_name":"Rajasthan"},{"state_id":30,"state_name":"Sikkim"},{"state_id":31,"state_name":"Tamil Nadu"},{"state_id":32,"state_name":"Telangana"},{"state_id":33,"state_name":"Tripura"},{"state_id":34,"state_name":"Uttar Pradesh"},{"state_id":35,"state_name":"Uttarakhand"},{"state_id":36,"state_name":"West Bengal"}]
 
-
+def check_invalid(email):
+    regex = '^[a-z0-9]+[\._]?[ a-z0-9]+[@]\w+[. ]\w{2,3}$'
+    if(re.search(regex,email)):
+        return False
+    else:
+        return True
 
 headers = headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.76 Safari/537.36'}
 
@@ -71,7 +76,10 @@ if len(sys.argv)>0:
         while True:
             try:
                 rng = int(input("Enter the number days into the future, to search for vaccines, starting today."))
-                break
+                if rng<30:
+                    break
+                else:
+                    print("Needs to be less than 30, for DoS prot.")
             except:
                 print("enter a number for god's sake")
         while True:
@@ -87,7 +95,9 @@ if len(sys.argv)>0:
                 break
             except:
                 print("enter a number for god's sake")
-        email = input("Please enter your email id\n")
+        email = ""
+        while check_invalid(email):
+            email = input("Please enter your email id\n")
         print("1) Please enable 2-Factor authentication at https://myaccount.google.com/security\n2) Then generate an application password at (https://myaccount.google.com/apppasswords)")
         twofaauth = input("Enter password...")
         tfa = twofaauth
