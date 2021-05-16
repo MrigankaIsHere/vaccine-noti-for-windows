@@ -152,7 +152,8 @@ while True:
                 if resp_json["centers"]:
                     for center in resp_json["centers"]:
                         for session in center["sessions"]:
-                            if session["min_age_limit"] <= age and session["available_capacity"]>0:
+                            # change available_capacity_dose2 to available_capacity_dose1 for does 1 acoordingly
+                            if session["min_age_limit"] <= age and session["available_capacity_dose2"]>0:
                                 s += "\t " + center["name"]
                                 s +="\t " + center["block_name"]
                                 s +="\t Price: " + center["fee_type"]
