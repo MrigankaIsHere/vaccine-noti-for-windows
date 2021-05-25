@@ -6,6 +6,6 @@
 
 3. System will restart to make sure that the Notifier is seamlessly running in background. Make sure that you save all unsaved work.
 
-4. To stop receiving notification, run the STOPNOTIF.py "As an Administrator", and when asked for an input, enter yes. System will restart to make sure that the Notifier has stopped in background.
+4. To stop receiving notification, run the STOPNOTIF.bat "As an Administrator", and when asked for an input, enter yes. System will restart to make sure that the Notifier has stopped in background.
 
 5. Please protect user_details.txt, as it contains your gmail app password(though encrypted), I apologize for the careless handling of the user credentials...
