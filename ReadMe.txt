@@ -1,4 +1,4 @@
-0. This is an attempt to create a Vaccine notification system for Windows systems. None of the creds that the user enters, leave the user's local machine, and hence respect's user's privacy. I am trying to better manage the user credentials on the local system.
+0. This is an attempt to create a Vaccine notification system for Windows systems. None of the creds that the user enters, leave the user's local machine, and hence respects user's privacy. I am trying to better manage the user credentials on the local system.
 
 1. Run the SETUP.bat "As an Administrator" and provide the required information.
 
